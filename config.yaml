@@ -4,24 +4,28 @@
 worlds:
     #Properties for Scania 0
   - flag: 0
-    server_message: Welcome to Scania!
-    event_message: Scania!
-    why_am_i_recommended: Welcome to Scania!
-    channels: 3
-    exp_rate: 10
-    meso_rate: 10
-    drop_rate: 10
-    boss_drop_rate: 10                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
+    event_message: Boosted 3x EXP, 5x Meso, 30x drop, 10x fishing
+    why_am_i_recommended: If you want to EXP speedrun
+    channels: 1
+    exp_rate: 3
+    meso_rate: 5
+    drop_rate: 30
+    boss_drop_rate: 30                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
     quest_rate: 5                           # Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        # Multiplier for success likelihood on meso thrown during fishing.
     travel_rate: 10                         # Means of transportation rides/departs using 1/N of the default time.
 
     #Properties for Bera 1
   - flag: 0
-    server_message: Welcome to Bera!
-    event_message: Bera!
-    why_am_i_recommended: Welcome to Bera!
-    channels: 3
+    event_message: Normal 1x EXP rate, boosted 5x Meso, 10x drop, 10x fishing
+    why_am_i_recommended: If you want the original progression but don't want the hunt grind
+    channels: 1
+    exp_rate: 1
+    meso_rate: 5
+    drop_rate: 10
+    boss_drop_rate: 10                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
+    fishing_rate: 10                        # Multiplier for success likelihood on meso thrown during fishing.
+    travel_rate: 10                         # Means of transportation rides/departs using 1/N of the default time.
 
     #Properties for Broa 2
   - flag: 0
@@ -161,16 +165,16 @@ server:
     #Database Configuration
     DB_URL_FORMAT: "jdbc:mysql://%s:3306/cosmic" # If the docker ENV for DB_HOST is anything but "db", this string format should be changed from 3306 to 3307 (or whichever port it was changed to in docker) 
     DB_HOST: "localhost" 
-    DB_USER: "root"                 
-    DB_PASS: "root"                     # CHANGE_ME to the same as docker-compose file MYSQL_ROOT_PASSWORD
+    DB_USER: "db_admin"                 
+    DB_PASS: "db_password"              # CHANGE_ME to the same as docker-compose file MYSQL_ROOT_PASSWORD
     INIT_CONNECTION_POOL_TIMEOUT: 90    # Seconds
 
     #Login Configuration
-    WORLDS: 1                           # CHANGE_ME Initial number of worlds on the server.
-    WLDLIST_SIZE: 21                    # CHANGE_ME Max possible worlds on the server.
-    CHANNEL_SIZE: 20                    # CHANGE_ME Max possible channels per world (which is 20, based on the channel list on login phase).
-    CHANNEL_LOAD: 100                   # CHANGE_ME Max players per channel (limit actually used to calculate the World server capacity).
-    CHANNEL_LOCKS: 20                   #Total number of structure management locks each channel has.
+    WORLDS: 2                           # CHANGE_ME Initial number of worlds on the server.
+    WLDLIST_SIZE: 2                     # CHANGE_ME Max possible worlds on the server.
+    CHANNEL_SIZE: 1                     # CHANGE_ME Max possible channels per world (which is 20, based on the channel list on login phase).
+    CHANNEL_LOAD: 10                    # CHANGE_ME Max players per channel (limit actually used to calculate the World server capacity).
+    CHANNEL_LOCKS: 10                   # Total number of structure management locks each channel has.
 
     RESPAWN_INTERVAL: 10000             # 10 seconds, 10000.
     PURGING_INTERVAL: 300000            # 5 minutes, 300000.
@@ -256,7 +260,7 @@ server:
     USE_BUFF_MOST_SIGNIFICANT: true     # When applying buffs, the player will stick with the highest stat boost among the listed, rather than overwriting stats.
     USE_BUFF_EVERLASTING: false         # Every applied buff on players holds expiration time so high it'd be considered permanent. Suggestion thanks to Vcoc.
     USE_MULTIPLE_SAME_EQUIP_DROP: true  # Enables multiple drops by mobs of the same equipment, number of possible drops based on the quantities provided at the drop data.
-    USE_ENABLE_FULL_RESPAWN: false      # At respawn task, always respawn missing mobs when they're available. Spawn count doesn't depend on how many players are currently there.
+    USE_ENABLE_FULL_RESPAWN: true       # At respawn task, always respawn missing mobs when they're available. Spawn count doesn't depend on how many players are currently there.
     USE_ENABLE_CHAT_LOG: false          # Write in-game chat to log
     USE_MAP_OWNERSHIP_SYSTEM: false     # Flag to enable/disable map ownership system
     USE_FISHING_SYSTEM: false           # Flag to enable/disable custom fishing system
@@ -264,9 +268,9 @@ server:
 
     #Events/PQs Configuration
     USE_OLD_GMS_STYLED_PQ_NPCS: true    # Enables PQ NPCs with similar behaviour to old GMS style, that skips info about the PQs and immediately tries to register the party in.
-    USE_ENABLE_SOLO_EXPEDITIONS: false  # Enables start expeditions with any number of players. This will also bypass all the Zakum prequest.
-    USE_ENABLE_DAILY_EXPEDITIONS: false # Enables daily entry limitations in expeditions.
-    USE_ENABLE_RECALL_EVENT: false      # Enables a disconnected player to reaccess the last event instance they were in before logging out. Recall only works if the event isn't cleared or disposed yet. Suggestion thanks to Alisson (Goukken).
+    USE_ENABLE_SOLO_EXPEDITIONS: true   # Enables start expeditions with any number of players. This will also bypass all the Zakum prequest.
+    USE_ENABLE_DAILY_EXPEDITIONS: true  # Enables daily entry limitations in expeditions.
+    USE_ENABLE_RECALL_EVENT: true       # Enables a disconnected player to reaccess the last event instance they were in before logging out. Recall only works if the event isn't cleared or disposed yet. Suggestion thanks to Alisson (Goukken).
 
     #Announcement Configuration
     USE_ANNOUNCE_SHOPITEMSOLD: false    # Automatic message sent to owner when an item from the Player Shop or Hired Merchant is sold.
@@ -339,17 +343,17 @@ server:
     #Some Gameplay Enhancing Configurations
     #Scroll Configuration
     USE_PERFECT_GM_SCROLL: true            # Scrolls from GMs never uses up slots nor fails.
-    USE_PERFECT_SCROLLING: false           # Scrolls doesn't use slots upon failure.
-    USE_ENHANCED_CHSCROLL: false           # Equips even more powerful with chaos upgrade.
-    USE_ENHANCED_CRAFTING: false           # Apply chaos scroll on every equip crafted.
-    SCROLL_CHANCE_ROLLS: 1                 # Number of rolls for success on a scroll, set 1 for default.
-    CHSCROLL_STAT_RATE: 1                  # Number of rolls of stat upgrade on a successfully applied chaos scroll, set 1 for default.
-    CHSCROLL_STAT_RANGE: 5                 # Stat upgrade range (-N, N) on chaos scrolls.
+    USE_PERFECT_SCROLLING: true            # Scrolls doesn't use slots upon failure.
+    USE_ENHANCED_CHSCROLL: true            # Equips even more powerful with chaos upgrade.
+    USE_ENHANCED_CRAFTING: true            # Apply chaos scroll on every equip crafted.
+    SCROLL_CHANCE_ROLLS: 10                # Number of rolls for success on a scroll, set 1 for default.
+    CHSCROLL_STAT_RATE: 10                 # Number of rolls of stat upgrade on a successfully applied chaos scroll, set 1 for default.
+    CHSCROLL_STAT_RANGE: 10                 # Stat upgrade range (-N, N) on chaos scrolls.
 
     #Beginner Skills Configuration
-    USE_ULTRA_NIMBLE_FEET: false           # Massive speed & jump upgrade.
-    USE_ULTRA_RECOVERY: false              # Massive recovery amounts overtime.
-    USE_ULTRA_THREE_SNAILS: false          # Massive damage on shell toss.
+    USE_ULTRA_NIMBLE_FEET: true            # Massive speed & jump upgrade.
+    USE_ULTRA_RECOVERY: true               # Massive recovery amounts overtime.
+    USE_ULTRA_THREE_SNAILS: true           # Massive damage on shell toss.
 
     #Other Skills Configuration
     USE_FULL_ARAN_SKILLSET: false          # Enables starter availability to all Aran job skills. Suggestion thanks to Masterrulax.
@@ -362,13 +366,13 @@ server:
     USE_ADD_SLOTS_BY_LEVEL: false          # Slots are added each 20 levels.
     USE_ADD_RATES_BY_LEVEL: false          # Rates are added each 20 levels.
     USE_STACK_COUPON_RATES: false          # Multiple coupons effects builds up together.
-    USE_PERFECT_PITCH: false               # For lvl 30 or above, each lvlup grants player 1 perfect pitch.
+    USE_PERFECT_PITCH: true                # For lvl 30 or above, each lvlup grants player 1 perfect pitch.
 
     #Quest Configuration
     USE_QUEST_RATE: false                  # Exp/Meso gained by quests uses fixed server exp/meso rate times quest rate as multiplier, instead of player rates.
 
     #Quest Points Configuration
-    QUEST_POINT_REPEATABLE_INTERVAL: 25    # Minimum interval between repeatable quest completions for quest points to be awarded.
+    QUEST_POINT_REPEATABLE_INTERVAL: 10    # Minimum interval between repeatable quest completions for quest points to be awarded.
     QUEST_POINT_REQUIREMENT: 0             # Exchange factor between N quest points to +1 fame, set 0 to disable the entire quest point mechanism.
     QUEST_POINT_PER_QUEST_COMPLETE: 0      # Each completed quest awards N quest points, set 0 to disable.
     QUEST_POINT_PER_EVENT_CLEAR: 0         # Each completed event instance awards N quest points, set 0 to disable.
@@ -388,8 +392,8 @@ server:
     FAMILY_MAX_GENERATIONS: 1000           # Maximum depth of family tree. (Distance from leader to farthest junior)
 
     #Equipment Configuration
-    USE_EQUIPMNT_LVLUP_SLOTS: false        # Equips can upgrade slots at level up.
-    USE_EQUIPMNT_LVLUP_POWER: false        # Enable more powerful stat upgrades at equip level up.
+    USE_EQUIPMNT_LVLUP_SLOTS: true         # Equips can upgrade slots at level up.
+    USE_EQUIPMNT_LVLUP_POWER: true         # Enable more powerful stat upgrades at equip level up.
     USE_EQUIPMNT_LVLUP_CASH: false         # Enable equip leveling up on cash equipments as well.
     MAX_EQUIPMNT_LVLUP_STAT_UP: 10000      # Max stat upgrade an equipment can have on a levelup.
     MAX_EQUIPMNT_STAT: 32767               # Max stat on an equipment by leveling up.
@@ -420,7 +424,7 @@ server:
     MOUNT_EXHAUST_COUNT: 1                 # Number of proc counts (1 per minute) on the exhaust schedule for tiredness.
 
     #Pet Hunger Configuration
-    PETS_NEVER_HUNGRY: false               # If true, pets and mounts will never grow hungry.
+    PETS_NEVER_HUNGRY: true                # If true, pets and mounts will never grow hungry.
     GM_PETS_NEVER_HUNGRY: true             # If true, pets and mounts owned by GMs will never grow hungry.
 
     #Event Configuration
@@ -448,10 +452,10 @@ server:
     EVENT_END_TIMESTAMP: 1428897600000
 
     # GM Security Configuration
-    MINIMUM_GM_LEVEL_TO_TRADE: 4
-    MINIMUM_GM_LEVEL_TO_USE_STORAGE: 4
-    MINIMUM_GM_LEVEL_TO_USE_DUEY: 4
-    MINIMUM_GM_LEVEL_TO_DROP: 4
+    MINIMUM_GM_LEVEL_TO_TRADE: 3
+    MINIMUM_GM_LEVEL_TO_USE_STORAGE: 3
+    MINIMUM_GM_LEVEL_TO_USE_DUEY: 3
+    MINIMUM_GM_LEVEL_TO_DROP: 3
 
     #Any NPC ids that should search for a js override script (useful if they already have wz entries since otherwise they're ignored).
     NPCS_SCRIPTABLE:

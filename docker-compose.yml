@@ -9,10 +9,11 @@ services:
     ports:
       # Login server
       - "8484:8484"
-      # Channels.
-      # Format: WWCC, where WW is 75 plus the world number and CC is 75 plus the channel number (both zero indexed).
-      # In this case, world 1 channels 1-3.
-      - "7575-7577:7575-7577"
+      # Channels
+      # Scania
+      - "7575:7575"
+      # Bera
+      - "7675:7675"
     volumes:
       # Config changes can be reloaded without rebuilding the image.
       # Still requires a redeployment as they're sourced on startup.
@@ -46,7 +47,7 @@ services:
     container_name: adminer-container
     restart: unless-stopped
     ports:
-      - "8080:80"  # Expose Adminer on port 8080
+      - "9090:80"  # Expose Adminer on port 9090
     depends_on:
       - db         # Ensure MySQL container is started before Adminer
     networks:
