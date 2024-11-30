@@ -2,6 +2,8 @@ version: '3'
 services:
   maplestory:
     build: .
+    container_name: maplestory-server
+    restart: unless-stopped
     depends_on:
       - db
     ports:
@@ -19,15 +21,37 @@ services:
       - ./wz:/opt/server/wz
     environment:
       DB_HOST: "db" ## Remember if this is present it will OVERRIDE the host in the config.yaml, if you put here anything other than db, you'll need to change the config.yaml jdbc string to port 3307, and not port 3306
+    networks:
+      - db-network
     
   db:
     image: mysql:8.4.0
+    container_name: maplestory-db
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: "cosmic"
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
-    ports:
-      - "3307:3306"
+      MYSQL_USER: 'db_admin'
+      MYSQL_PASSWORD: 'db_password'
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ALLOW_EMPTY_PASSWORD: no
+      lower_case_table_names: 1
     volumes:
       - ./database/docker-db-data:/var/lib/mysql
       - ./database/sql:/docker-entrypoint-initdb.d
+    networks:
+      - db-network
+
+  adminer:
+    image: dockette/adminer:mysql
+    container_name: adminer-container
+    restart: unless-stopped
+    ports:
+      - "8080:80"  # Expose Adminer on port 8080
+    depends_on:
+      - db         # Ensure MySQL container is started before Adminer
+    networks:
+      - db-network
+      
+networks:
+  db-network:
+    driver: bridge
