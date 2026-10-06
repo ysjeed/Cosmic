@@ -17,10 +17,10 @@ worlds:
 
     #Properties for Bera 1
   - flag: 0
-    event_message: Normal 1.5x EXP rate, boosted 5x Meso, 10x drop, 10x fishing
+    event_message: Normal 1x EXP rate, boosted 5x Meso, 10x drop, 10x fishing
     why_am_i_recommended: If you want the original progression but don't want the hunt grind
     channels: 1
-    exp_rate: 1.5
+    exp_rate: 1
     meso_rate: 5
     drop_rate: 10
     boss_drop_rate: 10                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
