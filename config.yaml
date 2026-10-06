@@ -4,23 +4,23 @@
 worlds:
     #Properties for Scania 0
   - flag: 0
-    event_message: Boosted 3x EXP, 5x Meso, 30x drop, 10x fishing
+    event_message: Boosted 3x EXP, 5x Meso, 20x drop, 10x fishing
     why_am_i_recommended: If you want to EXP speedrun
     channels: 1
     exp_rate: 3
     meso_rate: 5
-    drop_rate: 30
-    boss_drop_rate: 30                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
+    drop_rate: 20
+    boss_drop_rate: 20                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
     quest_rate: 5                           # Multiplier for Exp & Meso gains when completing a quest. Only available when USE_QUEST_RATE is true. Stacks with server Exp & Meso rates.
     fishing_rate: 10                        # Multiplier for success likelihood on meso thrown during fishing.
     travel_rate: 10                         # Means of transportation rides/departs using 1/N of the default time.
 
     #Properties for Bera 1
   - flag: 0
-    event_message: Normal 1x EXP rate, boosted 5x Meso, 10x drop, 10x fishing
+    event_message: Normal 1.5x EXP rate, boosted 5x Meso, 10x drop, 10x fishing
     why_am_i_recommended: If you want the original progression but don't want the hunt grind
     channels: 1
-    exp_rate: 1
+    exp_rate: 1.5
     meso_rate: 5
     drop_rate: 10
     boss_drop_rate: 10                      # NOTE: Boss drop rate OVERRIDES common drop rate, for bosses-only.
